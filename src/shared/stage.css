@@ -1,0 +1,41 @@
+.stage{
+    padding-right: 10%;
+    padding-left: 10%;
+    width: 75%;
+    position: absolute;
+    display: flex;
+    flex:content;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding-bottom: 100%;
+    
+}
+
+.todo{
+    height: 75%;
+    padding-left: 15%;
+    padding-right: 15%;
+    border-left: 2px black solid;
+
+}
+.doing{
+    height: 75%;
+    padding-left: 15%;
+    padding-right: 15%;
+    border-left: 2px black solid; 
+    border-right: 2px black solid;  
+
+}
+.done{
+    height: 75%;
+    padding-left: 15%;
+    padding-right: 15%;
+    border-right: 2px black solid;  
+
+}
+
+.sector{
+
+    height: 1000px;
+    
+}
