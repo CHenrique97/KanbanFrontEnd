@@ -2,12 +2,14 @@ import { useSpring, animated, SpringValue } from '@react-spring/web'
 import { createUseGesture, dragAction, useDrag, useGesture } from '@use-gesture/react'
 import { FC, useRef } from 'react';
 import "./card.css"
-
+import cardState from "../shared/recoil/atom";
+import useLocalStorage from "../shared/recoil/localstorage";
+import { useRecoilState } from 'recoil';
  interface cardProps  {
    originalX: number,
    originalY : number,  
-   text:string
-   key: string
+   text:string,
+   id: string
 
   
 }
@@ -16,18 +18,27 @@ import "./card.css"
 const Card :FC<cardProps> = (props) => {
   let setX  =  props.originalX;
   let setY  = props.originalY;
+
   let [{ x, y }, api] = useSpring(() => ({ x: setX, y: setY }))
   const useGesture = createUseGesture([dragAction])
   const ref = useRef(null)
-  // Set the drag hook and define component movement based on gesture data
-  const bind =useGesture(
+  let [cards,setCards] = useRecoilState(cardState);
+  const [cardList,setCardList] = useLocalStorage("list",cards);
+  useGesture(
     {
    onDrag({offset :[sx,sy] ,down:isDown })  {
     api.start({ x : sx, y : sy})
     setX=sx;
     setY=sy;
    if (isDown===false) {
-    console.log("You stoped holding the button")
+    const cardPosition = cards.findIndex((selectedCard:  any) => selectedCard.key === props.id);
+    let newPosCard =  JSON.parse(JSON.stringify(cards));
+    newPosCard[cardPosition]["x"] = setX;
+    newPosCard[cardPosition]["y"]= setY;
+    setCards(newPosCard );
+    setCardList(newPosCard);
+    console.log(newPosCard[cardPosition]["x"])   
+
    }
 
   }

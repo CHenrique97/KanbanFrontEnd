@@ -21,7 +21,7 @@ const Board = () =>{
         <div>
     <Stage/>
     {cards.map((card:any) =>(
-      <Card key={card.key} originalX={card.x} originalY={card.y} text={card.content}></Card>
+      <Card key={card.key}  id={card.key} originalX={card.x} originalY={card.y} text={card.content}></Card>
     ))}
     <CardWriter></CardWriter>
     </div>
