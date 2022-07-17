@@ -4,11 +4,29 @@ import  add from "./../shared/imgs/add.png"
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import cardState from "../shared/recoil/atom";
+import useLocalStorage from "../shared/recoil/localstorage";
 const CardWriter = () => {
-  const [cards,setCards] = useRecoilState(cardState);
+  let [cards,setCards] = useRecoilState(cardState);
   const [message, setMessage] = useState('');
+  const [cardList,setCardList] = useLocalStorage("list",cards);
+
+  let makeId = (length:number) => {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
+}
+
   let addButton = () => {
-    setCards([...cards,{id:cards.length,content:message,x:0,y:200}]);
+    const thisId =makeId(10);
+    setCards([...cards,{key:thisId,content:message,x:0,y:200}]);
+    setCardList([...cards,{key:thisId,content:message,x:0,y:200}]);
+
+    
   }
   const handleMessageChange = (event: { target: { value: string; }; }) => {
     // 👇️ access textarea value

@@ -7,6 +7,7 @@ import "./card.css"
    originalX: number,
    originalY : number,  
    text:string
+   key: string
 
   
 }
@@ -21,12 +22,14 @@ const Card :FC<cardProps> = (props) => {
   // Set the drag hook and define component movement based on gesture data
   const bind =useGesture(
     {
-   onDrag({offset :[sx,sy] })  {
-   console.log(sx,sy)
+   onDrag({offset :[sx,sy] ,down:isDown })  {
     api.start({ x : sx, y : sy})
     setX=sx;
     setY=sy;
-   
+   if (isDown===false) {
+    console.log("You stoped holding the button")
+   }
+
   }
 
   },
