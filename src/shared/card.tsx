@@ -24,21 +24,32 @@ const Card :FC<cardProps> = (props) => {
   const ref = useRef(null)
   let [cards,setCards] = useRecoilState(cardState);
   const [cardList,setCardList] = useLocalStorage("list",cards);
+
+
+  const excludeCard = () =>{
+    const cardPosition = cards.findIndex((selectedCard:  any) => selectedCard.key === props.id);
+    let newPosCard =  JSON.parse(JSON.stringify(cards));
+    newPosCard[cardPosition]={};
+    setCards(newPosCard);
+    setCardList(newPosCard);
+  }
+  
+
+
   useGesture(
     {
    onDrag({offset :[sx,sy] ,down:isDown })  {
     api.start({ x : sx, y : sy})
     setX=sx;
     setY=sy;
-   if (isDown===false) {
+   if (!isDown) {
     const cardPosition = cards.findIndex((selectedCard:  any) => selectedCard.key === props.id);
     let newPosCard =  JSON.parse(JSON.stringify(cards));
     newPosCard[cardPosition]["x"] = setX;
     newPosCard[cardPosition]["y"]= setY;
-    setCards(newPosCard );
+    setCards(newPosCard);
     setCardList(newPosCard);
-    console.log(newPosCard[cardPosition]["x"])   
-
+    
    }
 
   }
@@ -54,7 +65,9 @@ const Card :FC<cardProps> = (props) => {
   return (
   
   < animated.div className="Card" ref={ref}  style={{ x, y }}>  
+  <button className='exclude' onClick={ () => excludeCard()} >x</button>
      {props.text}
+     
   </animated.div>)
     
 }

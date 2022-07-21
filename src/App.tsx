@@ -20,7 +20,7 @@ function App() {
   return (
     <RecoilRoot>
         <div className='App' >
-          <Board></Board>
+          <Board/>
  </div>
 
 </RecoilRoot>

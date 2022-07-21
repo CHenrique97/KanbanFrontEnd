@@ -15,8 +15,14 @@
     user-select: none;
     z-index: 10;
     position: absolute;
+ 
+}
 
-
-
+.exclude{ 
+    
+    background-color: #fff54000;
+    border-left:15px;
+    border-radius: 15px;
+    height: 30px;
 
 }
